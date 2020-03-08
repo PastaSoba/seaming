@@ -1,0 +1,20 @@
+@startuml
+
+title seamingのシーケンス図\n・学習者の操作
+
+
+actor 学習者 
+
+participant 学習者 order 10
+participant ノードマップ order 20
+participant 表示マネージャ order 30
+participant ノード order 40
+participant ユーザマネージャ order 50
+
+学習者 -> ユーザマネージャ : ユーザ登録
+ユーザマネージャ -> ユーザマネージャ : ログイン
+学習者 -> ユーザマネージャ : ログイン
+学習者 -> ノード : ノードをクリック
+ノード -> ユーザマネージャ : ノードとユーザに該当する習熟度を取得
+学習者 <-- ノード : 詳細情報と習熟度を表示
+@enduml
