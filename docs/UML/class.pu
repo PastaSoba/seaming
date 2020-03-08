@@ -1,0 +1,51 @@
+@startuml
+title seamingのクラス図
+
+class ノードマップ << boundary >> {
+    + 見えている部分のノード : ノード[]
+}
+
+class 表示マネージャ << control >> {
+    + 表示領域 : int[]
+    - ノード間をつなぐリンク : リンク[]
+}
+
+class ノード << entity >> {
+    + ノードのID : String
+    + ノードの名前 : String
+    + ノードの説明 : String
+    + 教材サイトのURL : String
+    + ノードの座標 : int[]
+    + 親ノード : ノード
+    + 子ノードのリスト : ノード[]
+    + ノードの習熟度 : int = Null
+
+    + ポップアップを表示 (void) void
+    - 習熟度を表示 (ノードの習熟度 : int) : void
+}
+
+class ノードマネージャ << control >> {
+    - セッション鍵 : String
+    - ユーザのID : String
+    - ノードのID : String
+    - ノードの習熟度 : int 
+
+    + 習熟度を取得\n(セッション鍵 : String, ノードのID : String) : int
+}
+
+class ノード一覧 << control >> {
+    - ノードの一覧 : ノード[]
+}
+
+class 学習者 << entity >> {
+    - ユーザのID : String
+    - ユーザのパスワード : String
+}
+
+class ユーザマネージャ << control >> {
+    - ユーザのID : String
+    - ユーザのパスワード : String
+    + ユーザ登録\n(ユーザID : String, パスワード : String) : void
+    + ログイン\n(ユーザID : String, パスワード : String) : String
+}
+@enduml
