@@ -9,6 +9,7 @@ class ビューマネージャ << control >> {
     + リンクを作成する (void) : void
     + ノードの可視化 (void) : void
     + 詳細情報を表示 (void) : void
+    + 子ノードを取得\n(ノードのID : String) : ノードのID (String)
 }
 
 class ノードマネージャ << control >> {
