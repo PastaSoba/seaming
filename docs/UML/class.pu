@@ -3,49 +3,69 @@ title seamingのクラス図
 
 class ノードマップ << boundary >> {
     + 見えている部分のノード : ノード[]
-}
-
-class 表示マネージャ << control >> {
-    + 表示領域 : int[]
-    - ノード間をつなぐリンク : リンク[]
+    + ノード間をつなぐリンク : リンク[]
+    + 表示範囲 : int[]
+    + 表示範囲を変更する (int[]) : void
+    + リンクを作成する (void) : void
+    + ノードの可視化 (void) : void
 }
 
 class ノード << entity >> {
     + ノードのID : String
     + ノードの名前 : String
-    + ノードの説明 : String
+    + ノードの説明: String
     + 教材サイトのURL : String
     + ノードの座標 : int[]
     + 親ノード : ノード
     + 子ノードのリスト : ノード[]
     + ノードの習熟度 : int = Null
 
-    + ポップアップを表示 (void) void
-    - 習熟度を表示 (ノードの習熟度 : int) : void
+    + ポップアップを表示 (void) : void
+    + 詳細情報を表示 (void) : void
+    + 習熟度を表示 (void) : void
 }
 
-class ノードマネージャ << control >> {
+class ノードマネージャ_習熟度リスト << control >> {
     - セッション鍵 : String
     - ユーザのID : String
     - ノードのID : String
-    - ノードの習熟度 : int 
+    + ノードの習熟度 : int 
 
-    + 習熟度を取得\n(セッション鍵 : String, ノードのID : String) : int
+    + 習熟度を返す\n(セッション鍵 : String, ノードのID : String) : int
+    + 習熟度を変更\n(セッション鍵 : String, ノードのID : String) : int
 }
 
 class ノード一覧 << control >> {
-    - ノードの一覧 : ノード[]
 }
 
-class 学習者 << entity >> {
+
+class ユーザ << entity >> {
     - ユーザのID : String
     - ユーザのパスワード : String
+    - セッション鍵 : String
 }
 
 class ユーザマネージャ << control >> {
     - ユーザのID : String
     - ユーザのパスワード : String
     + ユーザ登録\n(ユーザID : String, パスワード : String) : void
-    + ログイン\n(ユーザID : String, パスワード : String) : String
+    + ログイン（セッション鍵の発行）\n(ユーザID : String, パスワード : String) : String
+    + ユーザIDの取得\n(セッション鍵 : String) : String
 }
+
+Note bottom of ユーザマネージャ : ログイン処理と\nユーザID・セッション鍵の結びつけを担当する
+
+Note top of ノードマップ : ノードの可視化と、\nノードへのイベント通知を担当する
+
+
+' ドラッグの部分
+ユーザ -- ノードマップ
+ノードマップ -- ノード
+
+
+ノード --* ノード一覧
+
+ユーザ -- ユーザマネージャ
+ノード -- ノードマネージャ_習熟度リスト
+ユーザ -- ノードマネージャ_習熟度リスト
 @enduml
