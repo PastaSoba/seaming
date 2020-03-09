@@ -7,7 +7,6 @@ actor 管理者
 
 participant 管理者 order 10
 participant ノードマップ order 20
-participant 表示マネージャ order 30
 participant ノード一覧 order 35
 participant ノード order 40
 participant ユーザマネージャ order 50
