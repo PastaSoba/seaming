@@ -1,13 +1,13 @@
 from rest_framework import generics
 from node.models import ChangeableInfo
-from .serializers import NodeSerializer
+from .serializers import UserNodeListSerializer
 
 
-class NodeListView(generics.ListAPIView):
-    """特定ノードの特定ユーザの情報を返すための
+class UserNodeListView(generics.ListAPIView):
+    """特定ユーザのノードのリストを返すための
     APIクラス"""
 
-    serializer_class = NodeSerializer
+    serializer_class = UserNodeListSerializer
     lookup_field = 'user_id'
 
     def get_queryset(self):

@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import NodeListView
+from .views import UserNodeListView
 
 
 urlpatterns = [
     # 特定ユーザのノードのリストを返す
-    path('nodes/user/<int:user_id>/', NodeListView.as_view()),
+    path('user/<int:user_id>/', UserNodeListView.as_view())
 ]

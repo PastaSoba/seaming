@@ -2,8 +2,8 @@ from rest_framework import serializers
 from node.models import ChangeableInfo
 
 
-class NodeSerializer(serializers.ModelSerializer):
-    """ノードの詳細を返すためのシリアライザ"""
+class UserNodeListSerializer(serializers.ModelSerializer):
+    """特定ユーザのノードの詳細を返すためのシリアライザ"""
 
     user_name = serializers.ReadOnlyField(source='user.username')
     node_name = serializers.ReadOnlyField(source='node.name')

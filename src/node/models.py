@@ -5,7 +5,7 @@ from django.contrib.auth import models as auth_models
 class UnChangeableInfo(models.Model):
     """
     ノード情報の中でユーザごとに変化しないもの
-    （不可変データ担当）
+    （不可変データ）
     """
 
     class Meta:
@@ -27,7 +27,7 @@ class UnChangeableInfo(models.Model):
 class ChangeableInfo(models.Model):
     """
     ノード情報の中でユーザごとに変化するもの
-    （可変データ担当）
+    （可変データ）
     """
 
     class Meta:
