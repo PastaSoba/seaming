@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     'rest_framework',
     'djoser',
+    'corsheaders',
 
     # My applications
     'apiv1.apps.Apiv1Config',
@@ -50,6 +51,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # 3rd party middleware
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,3 +132,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
+
+# 許可するオリジン
+CORS_ORIGIN_WHITELIST = [
+    'https://127.0.0.1:3000',
+]
+# レスポンスを公開する
+CORS_ALLOW_CREDENTIALS = True
