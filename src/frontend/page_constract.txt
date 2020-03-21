@@ -1,0 +1,10 @@
+# ページの構成
+
+
+index.js (実体はない。ReactRenderを呼び出すだけ)
+    - base.js (実体はない。コントローラの役割)
+        - template.js (ナビゲーションバー、フッター)
+        - toppage.js (サイトのトップページ)
+        - studypage.js (スキルマップのページ)
+            - skillmap.js (スキルマップの本体)
+                - node.js (ノードの実装)

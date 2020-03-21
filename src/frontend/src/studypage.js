@@ -1,4 +1,5 @@
 import React from 'react';
+import { Skillmap } from './skillmap';
 
 export const studyPage = () => {
     return (
@@ -14,7 +15,7 @@ export const studyPage = () => {
                 </div>
             </section>
 
-            <div id="animation"></div>
+            <Skillmap/>
         </div>
     )
 }
