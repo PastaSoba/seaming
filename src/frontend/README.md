@@ -66,3 +66,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### 修正予定
+- konvaで動かしたオブジェクトの位置情報がreact.stateに反映されない不具合がある
+- 線をドラッグすることでも子ノードが動いてしまう
+
+### react-konvaを使う上での解釈
+reactで管理するのはノードのユーザ情報、習熟度に限られ、ノードの位置は管理しない。したがって、ノードの位置の変更をreactのstateに反映させていない。
