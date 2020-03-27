@@ -60,7 +60,7 @@ export class Node extends Component {
                 <Line
                     points={[-this.state.rel_x, -this.state.rel_y, 0, 0]}
                     visible={this.props.lineVisible}
-                    stroke={"black"}
+                    stroke={"gray"}
                     strokeWidth={3}/>
                 
                 {/* ノードの子ノードを生成する */}
@@ -74,17 +74,17 @@ export class Node extends Component {
 
                     <Circle
                         radius={50}
-                        fill="#89b717"
-                        shadowColor="black"
+                        fill={"#89b717"}
+                        shadowColor={"black"}
                         shadowBlur={10}
                         shadowOpacity={0.6}/>
 
                     <Text
                         fontSize={24}
                         text={this.props.data.name}
-                        fill="black"
-                        align="center"
-                        verticalAlign="middle"
+                        fill={"black"}
+                        align={"center"}
+                        verticalAlign={"middle"}
                         offsetX={20}
                         offsetY={10}/>
                 </Group>
