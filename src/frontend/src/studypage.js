@@ -9,13 +9,11 @@ export const studyPage = () => {
                     <h1 class="title">
                         Study Page
                     </h1>
-                    <p class="subtitle">
-                        My first website with <strong>Bulma</strong>!
-                    </p>
                 </div>
             </section>
-
-            <Skillmap/>
+            <div class="skillmap">
+                <Skillmap/>
+            </div>
         </div>
     )
 }

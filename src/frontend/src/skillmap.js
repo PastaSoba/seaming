@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Stage,Layer} from 'react-konva';
+import {Stage,Layer,Group, Rect} from 'react-konva';
 import {Node} from "./node";
 
 const server = 'http://localhost:8000/api/v1/nodes/';
@@ -11,13 +11,14 @@ export class Skillmap extends Component {
         super(props);
         this.state = {
             loading: true,
-            data: null
+            data: null,
         }
     }
 
     componentDidMount() {
         axios.get(server)
             .then((res) => {
+                console.log("data received");
                 this.setState({loading: false, data: res.data});
             })
             .catch((err) => {
@@ -27,17 +28,20 @@ export class Skillmap extends Component {
     }
 
     render() {
-        if (this.state.loding === true) {
+        if (this.state.loading === true) {
             return (
                 <p>Now Loading...</p>
             )
         }
         else {
-            // console.log(this.state.data)
             return (
-                <Stage width={window.innerWidth} height={window.innerHeight}>
+                <Stage 
+                    width={window.innerWidth}
+                    height={window.innerHeight}
+                    draggable>
                     <Layer>
-                        <Node data={this.state.data} />
+                        {/* lineVisibleを使って、rootノードから生成される余計なLineを非表示にしている */}
+                        <Node data={this.state.data} lineVisible={false}/>
                     </Layer>
                 </Stage>
             )
