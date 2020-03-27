@@ -24,8 +24,16 @@ export class Node extends Component {
           });
     };
 
-    // アニメーション効果
+    // アニメーション効果、ノード位置のstateへの反映
     handleDragEnd = e => {
+        this.setState({
+            rel_x: e.target.x(),
+            rel_y: e.target.y()
+        })
+        
+        // 親ノードにstateの変更が伝搬しないようにする
+        e.cancelBubble = true
+
         e.target.to({
             duration: 0.5,
             easing: Konva.Easings.ElasticEaseOut,
