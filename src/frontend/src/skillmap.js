@@ -17,14 +17,17 @@ export class Skillmap extends Component {
         }
 
         this.state = {
+            stageWidth: window.innerWidth,
             loading: true,
             data: null,
             showPopup: false,
             toggleshowPopup: this.toggleshowPopup,
         }
+        this.changeSize = this.changeSize.bind(this)
     }
 
     componentDidMount() {
+        window.addEventListener("resize", this.changeSize);
         axios.get(server)
             .then((res) => {
                 console.log("data received");
@@ -36,6 +39,17 @@ export class Skillmap extends Component {
             });
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.changeSize);
+    }
+
+    changeSize() {
+        const width = window.innerWidth;
+        this.setState({
+            stageWidth: width
+        });
+    }
+
     render() {
         if (this.state.loading === true) {
             return (
@@ -45,7 +59,7 @@ export class Skillmap extends Component {
         else {
             return (
                 <Stage 
-                    width={window.innerWidth}
+                    width={this.state.stageWidth}
                     height={window.innerHeight}
                     draggable>
                     <ShowPopupContext.Provider value={this.state}>
