@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Konva from 'konva';
 import { Circle, Text, Group, Easings, Line } from 'react-konva';
+import {ShowPopupContext} from './context';
 
 //  木構造のような構造にする
 export class Node extends Component {
@@ -42,7 +43,7 @@ export class Node extends Component {
         });
     };
 
-    // ノード間をつなぎ続けるようにLineを更新する
+    // Lineのアニメーション
     handleDragMove = e => {
         // e.target について
         // https://www.w3schools.com/jsref/event_target.asp
@@ -56,47 +57,50 @@ export class Node extends Component {
 
     render() {
         return (
-            <Group
-                x={this.state.rel_x}
-                y={this.state.rel_y}
-                draggable
-                onDragStart={this.handleDragStart}
-                onDragEnd={this.handleDragEnd}
-                onDragMove={this.handleDragMove}>
-
-                {/* ノード間をつなぐLine */}
-                <Line
-                    points={[-this.state.rel_x, -this.state.rel_y, 0, 0]}
-                    visible={this.props.lineVisible}
-                    stroke={"gray"}
-                    strokeWidth={3}/>
-                
-                {/* ノードの子ノードを生成する */}
-                {this.props.data.unchangeableinfo_set.map((data) => 
-                    <Node data={data} lineVisible={true} />
+            <ShowPopupContext.Consumer>
+                {({showPopup, toggleshowPopup}) => (
+                    <Group
+                        x={this.state.rel_x}
+                        y={this.state.rel_y}
+                        draggable
+                        onDragStart={this.handleDragStart}
+                        onDragEnd={this.handleDragEnd}
+                        onDragMove={this.handleDragMove}>
+    
+                        {/* ノード間をつなぐLine */}
+                        <Line
+                            points={[-this.state.rel_x, -this.state.rel_y, 0, 0]}
+                            visible={this.props.lineVisible}
+                            stroke={"gray"}
+                            strokeWidth={3}></Line>
+                        
+                        {/* ノードの子ノードを生成する */}
+                        {this.props.data.unchangeableinfo_set.map((data) => 
+                            <Node data={data} lineVisible={true} />
+                        )}
+        
+                        {/* ノードを構成するオブジェクト */}
+                        <Group
+                            onClick={toggleshowPopup}>
+                            <Circle
+                                radius={50}
+                                fill={showPopup ? "red" : "green"}
+                                shadowColor={"black"}
+                                shadowBlur={10}
+                                shadowOpacity={0.6}></Circle>
+        
+                            <Text
+                                fontSize={24}
+                                text={this.props.data.name}
+                                fill={"black"}
+                                align={"center"}
+                                verticalAlign={"middle"}
+                                offsetX={20}
+                                offsetY={10}></Text>
+                        </Group>
+                    </Group>
                 )}
-
-                {/* ノードを構成するオブジェクト */}
-                <Group
-                    onClick={e => {alert("hello")}}>
-
-                    <Circle
-                        radius={50}
-                        fill={"#89b717"}
-                        shadowColor={"black"}
-                        shadowBlur={10}
-                        shadowOpacity={0.6}/>
-
-                    <Text
-                        fontSize={24}
-                        text={this.props.data.name}
-                        fill={"black"}
-                        align={"center"}
-                        verticalAlign={"middle"}
-                        offsetX={20}
-                        offsetY={10}/>
-                </Group>
-            </Group>
+            </ShowPopupContext.Consumer>
         )
     }
 }

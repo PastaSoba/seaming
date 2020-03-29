@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Stage,Layer,Group, Rect} from 'react-konva';
-import {Node} from "./node";
+import {Stage} from 'react-konva';
+import {ShowPopupContext} from './context';
+import {SkillmapLayer} from './skillmapLayer';
+import {PopupLayer} from './popupLayer';
 
 const server = 'http://localhost:8000/api/v1/nodes/';
 
@@ -9,9 +11,16 @@ const server = 'http://localhost:8000/api/v1/nodes/';
 export class Skillmap extends Component {
     constructor(props) {
         super(props);
+
+        this.toggleshowPopup = () => {
+            this.setState({showPopup: !this.state.showPopup});
+        }
+
         this.state = {
             loading: true,
             data: null,
+            showPopup: false,
+            toggleshowPopup: this.toggleshowPopup,
         }
     }
 
@@ -39,10 +48,14 @@ export class Skillmap extends Component {
                     width={window.innerWidth}
                     height={window.innerHeight}
                     draggable>
-                    <Layer>
-                        {/* lineVisibleを使って、rootノードから生成される余計なLineを非表示にしている */}
-                        <Node data={this.state.data} lineVisible={false}/>
-                    </Layer>
+                    <ShowPopupContext.Provider value={this.state}>
+                        <SkillmapLayer data={this.state.data}/>
+                        <ShowPopupContext.Consumer>
+                            {({showPopup}) => (
+                                showPopup && <PopupLayer/>
+                            )}
+                        </ShowPopupContext.Consumer>
+                    </ShowPopupContext.Provider>
                 </Stage>
             )
         }
