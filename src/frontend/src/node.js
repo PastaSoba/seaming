@@ -58,7 +58,7 @@ export class Node extends Component {
     render() {
         return (
             <ShowPopupContext.Consumer>
-                {({showPopup, toggleshowPopup}) => (
+                {({toggleshowPopup}) => (
                     <Group
                         x={this.state.rel_x}
                         y={this.state.rel_y}
@@ -84,7 +84,7 @@ export class Node extends Component {
                             onClick={toggleshowPopup}>
                             <Circle
                                 radius={50}
-                                fill={showPopup ? "red" : "green"}
+                                fill={"green"}
                                 shadowColor={"black"}
                                 shadowBlur={10}
                                 shadowOpacity={0.6}></Circle>

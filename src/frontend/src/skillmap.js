@@ -17,17 +17,22 @@ export class Skillmap extends Component {
         }
 
         this.state = {
+            stageX: 0,
+            stageY: 0,
             stageWidth: window.innerWidth,
+            stageHeight: window.innerHeight,
             loading: true,
             data: null,
             showPopup: false,
             toggleshowPopup: this.toggleshowPopup,
         }
-        this.changeSize = this.changeSize.bind(this)
+        
+        this.changeWindowSizeHandler = this.changeWindowSizeHandler.bind(this);
+        this.dragEndHandler = this.dragEndHandler.bind(this)
     }
 
     componentDidMount() {
-        window.addEventListener("resize", this.changeSize);
+        window.addEventListener("resize", this.changeWindowSizeHandler);
         axios.get(server)
             .then((res) => {
                 console.log("data received");
@@ -40,13 +45,23 @@ export class Skillmap extends Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.changeSize);
+        window.removeEventListener("resize", this.changeWindowSizeHandler);
     }
 
-    changeSize() {
+    changeWindowSizeHandler() {
         const width = window.innerWidth;
+        const height = window.innerHeight;
         this.setState({
-            stageWidth: width
+            stageWidth: width,
+            stageHeight: height
+        });
+    }
+
+    dragEndHandler = e => {
+        const stage = e.target;
+        this.setState({
+            stageX: stage.getAttr('x'),
+            stageY: stage.getAttr('y')
         });
     }
 
@@ -60,15 +75,16 @@ export class Skillmap extends Component {
             return (
                 <Stage 
                     width={this.state.stageWidth}
-                    height={window.innerHeight}
-                    draggable>
+                    height={this.state.stageHeight}
+                    draggable={!this.state.showPopup}
+                    onDragEnd={this.dragEndHandler}>
                     <ShowPopupContext.Provider value={this.state}>
                         <SkillmapLayer data={this.state.data}/>
-                        <ShowPopupContext.Consumer>
-                            {({showPopup}) => (
-                                showPopup && <PopupLayer/>
-                            )}
-                        </ShowPopupContext.Consumer>
+                        <PopupLayer 
+                            stageX={this.state.stageX}
+                            stageY={this.state.stageY}
+                            stageWidth={this.state.stageWidth}
+                            stageHeight={this.state.stageHeight}/>
                     </ShowPopupContext.Provider>
                 </Stage>
             )
