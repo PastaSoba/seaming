@@ -17,6 +17,14 @@ class UserNodeListSerializer(serializers.ModelSerializer):
         fields = ['user_name', 'node_name', 'node_description', 'node_url', 'node_position_x', 'node_position_y', 'proficiency']
 
 
+class NodeSerializer(serializers.ModelSerializer):
+    """特定ノードの詳細情報を返すためのシリアライザ"""
+
+    class Meta:
+        model = UnChangeableInfo
+        fields = ['name', 'description', 'url']
+
+
 class RecursiveField(serializers.Serializer):
     """再帰で使用。どんな仕組みかは分からない"""
     # https://www.django-rest-framework.org/api-guide/relations/#custom-relational-fields
@@ -29,7 +37,10 @@ class RecursiveField(serializers.Serializer):
 
 class RecursiveNodeSerializer(serializers.ModelSerializer):
     unchangeableinfo_set = RecursiveField(many=True)
+    details = serializers.HyperlinkedIdentityField(
+        view_name='detail-url'
+    )
 
     class Meta:
         model = UnChangeableInfo
-        fields = ['name', 'description', 'url', 'position_x', 'position_y', 'unchangeableinfo_set']
+        fields = ['name', 'position_x', 'position_y', 'details', 'unchangeableinfo_set']
