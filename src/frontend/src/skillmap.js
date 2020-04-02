@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Stage} from 'react-konva';
-import {ShowPopupContext} from './context';
+import {ShowPopupContext, PopupContentContext} from './context';
 import {SkillmapLayer} from './skillmapLayer';
 import {PopupLayer} from './popupLayer';
 
@@ -16,6 +16,10 @@ export class Skillmap extends Component {
             this.setState({showPopup: !this.state.showPopup});
         }
 
+        this.setUrl = (url) => {
+            this.setState({popupContentUrl: url});
+        }
+
         this.state = {
             stageX: 0,
             stageY: 0,
@@ -25,6 +29,8 @@ export class Skillmap extends Component {
             data: null,
             showPopup: false,
             toggleshowPopup: this.toggleshowPopup,
+            popupContentUrl: "",
+            setUrl: this.setUrl,
         }
         
         this.changeWindowSizeHandler = this.changeWindowSizeHandler.bind(this);
@@ -57,7 +63,7 @@ export class Skillmap extends Component {
         });
     }
 
-    dragEndHandler = e => {
+    dragEndHandler(e) {
         const stage = e.target;
         this.setState({
             stageX: stage.getAttr('x'),
@@ -79,12 +85,14 @@ export class Skillmap extends Component {
                     draggable={!this.state.showPopup}
                     onDragEnd={this.dragEndHandler}>
                     <ShowPopupContext.Provider value={this.state}>
-                        <SkillmapLayer data={this.state.data}/>
-                        <PopupLayer 
-                            stageX={this.state.stageX}
-                            stageY={this.state.stageY}
-                            stageWidth={this.state.stageWidth}
-                            stageHeight={this.state.stageHeight}/>
+                        <PopupContentContext.Provider value={this.state}>
+                            <SkillmapLayer data={this.state.data}/>
+                            <PopupLayer 
+                                stageX={this.state.stageX}
+                                stageY={this.state.stageY}
+                                stageWidth={this.state.stageWidth}
+                                stageHeight={this.state.stageHeight}/>
+                        </PopupContentContext.Provider>
                     </ShowPopupContext.Provider>
                 </Stage>
             )
