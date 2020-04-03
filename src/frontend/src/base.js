@@ -1,18 +1,22 @@
 import React from 'react';
-import { Navbar, Footer } from './template';
-import { topPage } from './toppage';
-import { studyPage } from './studypage';
-import { visionPage } from './visionPage';
+import { CustomedHeader, CustomedFooter } from './template';
+import { TopPage } from './toppage';
+import { StudyPage } from './studypage';
+import { VisionPage } from './visionPage';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 export const Base = () => {
     return (
+        <Layout>
         <BrowserRouter>
-            <Navbar/>
-            <Route path='/' exact component={topPage}/>
-            <Route path='/study' exact component={studyPage}/>
-            <Route path='/vision' exact component={visionPage}/>
-            <Footer/>
+            <CustomedHeader/>
+            <Switch>
+                <Route exact path='/' component={TopPage}/>
+                <Route exact path='/study' component={StudyPage}/>
+                <Route exact path='/vision' component={VisionPage}/>
+            </Switch>
+            <CustomedFooter/>
         </BrowserRouter>
+        </Layout>
     );
 }

@@ -4,7 +4,8 @@ import {BrowserRouter, Link, Route} from 'react-router-dom';
 
 // テンプレートを集めておく
 
-export const Navbar = () => {
+
+export const CustomedHeader = () => {
     return (
         /* ナビゲーションバー */
         <nav class="navbar is-info" role="navigation" aria-label="main navigation">
@@ -37,7 +38,7 @@ export const Navbar = () => {
     );
 }
 
-export const Footer = () => {
+export const CustomedFooter = () => {
     return (
         <footer class="footer">
             <div class="footer_columns_overall">

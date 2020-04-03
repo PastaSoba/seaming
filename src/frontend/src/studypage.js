@@ -1,7 +1,7 @@
 import React from 'react';
 import { Skillmap } from './skillmap';
 
-export const studyPage = () => {
+export const StudyPage = () => {
     return (
         <div>
             <section class="section">

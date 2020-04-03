@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const visionPage = () => {
+export const VisionPage = () => {
     return (
         <div>
             <h1>This is topPage</h1>
