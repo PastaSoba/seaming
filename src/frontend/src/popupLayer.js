@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {Layer, Rect} from 'react-konva';
-import {ShowPopupContext} from './context';
+import {Layer, Rect, Group} from 'react-konva';
+import axios from 'axios';
+import {ShowPopupContext, PopupContentContext} from './context';
+import {PopupContent} from './popupContent';
 
 
 export class PopupLayer extends Component {
@@ -13,13 +15,25 @@ export class PopupLayer extends Component {
         })
     }
 
+    getDetailfromURL = (url) => {
+        axios.get(url)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
     render(){
         return (
             <ShowPopupContext.Consumer>
-                {({showPopup, toggleshowPopup}) => (showPopup &&
+                {({showPopup, toggleshowPopup}) => (
                     <Layer
+                        // 背景の位置
                         x={-this.props.stageX}
-                        y={-this.props.stageY}>
+                        y={-this.props.stageY}
+                        visible={showPopup}>
 
                         {/* skillMapを覆い隠すように背景をセット */}
                         <Rect
@@ -29,15 +43,27 @@ export class PopupLayer extends Component {
                             height={this.props.stageHeight}
                             onClick={toggleshowPopup}/>
 
-                        {/* ポップアップの中身 */}
-                        <Rect
-                            fill={"white"}
-                            x={this.props.stageWidth/2}
-                            y={this.props.stageHeight/2}
-                            width={this.state.popUpWindowWidth}
-                            height={this.state.popUpWindowHeight}
-                            offsetX={this.state.popUpWindowWidth/2}
-                            offsetY={this.state.popUpWindowHeight/2}/>
+                        <PopupContentContext.Consumer>
+                            {({popupContentUrl}) => (
+                                // ポップアップの中身
+                                <Group
+                                    // ポップアップの内容の位置
+                                    x={this.props.stageWidth/2}
+                                    y={this.props.stageHeight/2}>
+                                    <Rect
+                                        fill={"white"}
+                                        width={this.state.popUpWindowWidth}
+                                        height={this.state.popUpWindowHeight}
+                                        offsetX={this.state.popUpWindowWidth/2}
+                                        offsetY={this.state.popUpWindowHeight/2}>
+                                    </Rect>
+                                    <PopupContent 
+                                        width={this.state.popUpWindowWidth}
+                                        height={this.state.popUpWindowHeight}
+                                        detailUrl={popupContentUrl}/>
+                                </Group>
+                            )}
+                        </PopupContentContext.Consumer>
                     </Layer>
                 )}
             </ShowPopupContext.Consumer>

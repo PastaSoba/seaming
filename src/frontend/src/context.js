@@ -9,6 +9,6 @@ export const ShowPopupContext = React.createContext({
 
 // ポップアップの情報を制御するReact.Context
 export const PopupContentContext = React.createContext({
-    url: "",
+    popupContentUrl: "",
     setUrl: () => {alert("react PopupContentContext is not seted!");}
 })
