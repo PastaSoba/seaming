@@ -65,6 +65,7 @@ export const CustomedFooter = () => {
                     <div class="column">
                         <h5 class="subtitle is-5">運営情報</h5>
                         <ul>
+                            <li><Link to='/mission'>ミッション</Link></li>
                             <li>運営について</li>
                         </ul>
                     </div>
