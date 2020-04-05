@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Layer, Rect, Text} from 'react-konva';
 import axios from 'axios';
+import { PopupContentContext } from './context';
 
 
-export class PopupContent extends Component {
+export class Sidebar extends Component {
     constructor(props){
         super(props);
 
@@ -50,9 +50,7 @@ export class PopupContent extends Component {
 
     render(){
         return (
-            <Text
-                text={this.state.name}
-            />
+            <h1>{this.state.name}</h1>
         )
     }
 }

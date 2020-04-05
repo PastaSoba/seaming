@@ -1,19 +1,36 @@
 import React from 'react';
 import { Skillmap } from './skillmap';
+import { Sidebar } from './sidebar';
+import {PopupContentContext} from './context'
 
-export const StudyPage = () => {
-    return (
-        <div>
-            <section class="section">
-                <div class="container">
-                    <h1 class="title">
-                        Study Page
-                    </h1>
+export class StudyPage extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.setUrl = (url) => {
+            this.setState({popupContentUrl: url});
+        }
+
+        this.state = {
+            popupContentUrl: "",
+            setUrl: this.setUrl,
+        }
+    }
+
+    render(){
+        return (
+            <div>
+                <div class="columns">
+                    <div class="column is-3">
+                        <Sidebar detailUrl={this.state.popupContentUrl}/>
+                    </div>
+                    <div class="column is-9 skillmap">
+                        <PopupContentContext.Provider value={this.state}>
+                            <Skillmap/>
+                        </PopupContentContext.Provider>
+                    </div>
                 </div>
-            </section>
-            <div class="skillmap">
-                <Skillmap/>
             </div>
-        </div>
-    )
+        )
+    }
 }

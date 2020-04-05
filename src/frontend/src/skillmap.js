@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Stage} from 'react-konva';
-import {ShowPopupContext, PopupContentContext} from './context';
 import {SkillmapLayer} from './skillmapLayer';
-import {PopupLayer} from './popupLayer';
+import { PopupContentContext } from './context';
 
 const server = 'http://localhost:8000/api/v1/nodes/';
 
@@ -12,25 +11,17 @@ export class Skillmap extends Component {
     constructor(props) {
         super(props);
 
-        this.toggleshowPopup = () => {
-            this.setState({showPopup: !this.state.showPopup});
-        }
-
-        this.setUrl = (url) => {
-            this.setState({popupContentUrl: url});
-        }
-
         this.state = {
             stageX: 0,
             stageY: 0,
             stageWidth: window.innerWidth,
             stageHeight: window.innerHeight,
+
             loading: true,
             data: null,
-            showPopup: false,
-            toggleshowPopup: this.toggleshowPopup,
+
             popupContentUrl: "",
-            setUrl: this.setUrl,
+            setUrl: null
         }
         
         this.changeWindowSizeHandler = this.changeWindowSizeHandler.bind(this);
@@ -79,22 +70,20 @@ export class Skillmap extends Component {
         }
         else {
             return (
-                <Stage 
-                    width={this.state.stageWidth}
-                    height={this.state.stageHeight}
-                    draggable={!this.state.showPopup}
-                    onDragEnd={this.dragEndHandler}>
-                    <ShowPopupContext.Provider value={this.state}>
-                        <PopupContentContext.Provider value={this.state}>
-                            <SkillmapLayer data={this.state.data}/>
-                            <PopupLayer 
-                                stageX={this.state.stageX}
-                                stageY={this.state.stageY}
-                                stageWidth={this.state.stageWidth}
-                                stageHeight={this.state.stageHeight}/>
-                        </PopupContentContext.Provider>
-                    </ShowPopupContext.Provider>
-                </Stage>
+                <PopupContentContext.Consumer>
+                    {({setUrl}) => (
+                        // Because Stage kills Consumer API, I use Consumer here then use Provider more.
+                        <Stage 
+                            width={this.state.stageWidth}
+                            height={this.state.stageHeight}
+                            draggable
+                            onDragEnd={this.dragEndHandler}>
+                            <PopupContentContext.Provider value={{setUrl: setUrl}}>
+                                <SkillmapLayer data={this.state.data}/>
+                            </PopupContentContext.Provider>
+                        </Stage>
+                    )}
+                </PopupContentContext.Consumer>
             )
         }
         
