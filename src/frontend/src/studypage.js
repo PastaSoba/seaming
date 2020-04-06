@@ -20,12 +20,12 @@ export class StudyPage extends React.Component {
     render(){
         return (
             <div>
-                <div class="columns">
-                    <div class="column is-3">
+                <div class="columns is-gapless">
+                    <div style={{margin: 10}} class="column is-3">
                         <Sidebar detailUrl={this.state.popupContentUrl}/>
                     </div>
                     <div class="column is-9 skillmap">
-                        <div>
+                        <div class="skillmap">
                             <PopupContentContext.Provider value={this.state}>
                                 <Skillmap/>
                             </PopupContentContext.Provider>

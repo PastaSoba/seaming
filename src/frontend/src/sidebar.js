@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { PopupContentContext } from './context';
+import { SidebarContent } from './sidebarContent';
 
 
 export class Sidebar extends Component {
@@ -46,7 +47,11 @@ export class Sidebar extends Component {
 
     render(){
         return (
-            <h1>{this.state.name}</h1>
+            <SidebarContent
+                name={this.state.name}
+                description={this.state.description}
+                url={this.state.url}
+            />
         )
     }
 }
